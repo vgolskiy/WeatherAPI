@@ -1,0 +1,19 @@
+package main
+
+import (
+	"os"
+
+	"github.com/labstack/echo/v4"
+)
+
+type server struct {
+	apiKey string
+	e      *echo.Echo
+}
+
+func newServer() *server {
+	s := &server{}
+	s.e = echo.New()
+	s.apiKey = os.Getenv("API_KEY")
+	return s
+}
