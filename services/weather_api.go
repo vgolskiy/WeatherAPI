@@ -59,7 +59,7 @@ type SystemParameters struct {
 	Sunset  int    `json:"sunset"`
 }
 
-type Forecast struct {
+type ForecastData struct {
 	Coord      Coordinates         `json:"coord"`
 	Weather    []WeatherConditions `json:"weather"`
 	Base       string              `json:"base"`
@@ -76,7 +76,7 @@ type Forecast struct {
 	Cod        int                 `json:"cod"`
 }
 
-func GetWeatherForecastByLatLon(lat, lon float64, key string) (*Forecast, error) {
+func GetWeatherForecastByLatLon(lat, lon float64, key string) (*ForecastData, error) {
 	res, err := http.Get(
 		fmt.Sprintf("%s%s=%.2f&%s=%.2f&%s=%s",
 			url,
@@ -90,7 +90,7 @@ func GetWeatherForecastByLatLon(lat, lon float64, key string) (*Forecast, error)
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 
-	forecast := &Forecast{}
+	forecast := &ForecastData{}
 	err = decoder.Decode(forecast)
 	if err != nil {
 		return nil, err

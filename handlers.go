@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"WeatherAPI/services"
@@ -23,7 +22,7 @@ func (s *server) handleGetWeatherForecast() echo.HandlerFunc {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
 
-		fmt.Println(forecast)
-		return c.NoContent(http.StatusNoContent)
+		simplifiedForecast := services.ProcessWeatherForecastData(forecast)
+		return c.JSON(http.StatusOK, simplifiedForecast)
 	}
 }
