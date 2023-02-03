@@ -2,47 +2,28 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"strconv"
 
+	"WeatherAPI/services"
 	"github.com/labstack/echo/v4"
-)
-
-const (
-	queryParamLatitude  = "lat"
-	queryParamLongitude = "lon"
-	queryParamAPIKey    = "appid"
-	url                 = "https://api.openweathermap.org/data/2.5/weather?"
 )
 
 func (s *server) handleGetWeatherForecast() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		latitude, err := strconv.ParseFloat(c.QueryParam(queryParamLatitude), 64)
+		latitude, longitude, err := services.VerifyLatitudeLongitude(
+			c.QueryParam(services.QueryParamLatitude),
+			c.QueryParam(services.QueryParamLongitude),
+		)
 		if err != nil {
-			return err
-		}
-		longitude, err := strconv.ParseFloat(c.QueryParam(queryParamLongitude), 64)
-		if err != nil {
-			return err
-		}
-
-		res, err := http.Get(
-			fmt.Sprintf("%s%s=%.2f&%s=%.2f&%s=%s",
-				url,
-				queryParamLongitude, longitude,
-				queryParamLatitude, latitude,
-				queryParamAPIKey, s.apiKey))
-		if err != nil {
-			return err
+			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 		}
 
-		defer res.Body.Close()
-		body, err := ioutil.ReadAll(res.Body)
+		forecast, err := services.GetWeatherForecastByLatLon(latitude, longitude, s.apiKey)
 		if err != nil {
-			return err
+			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
-		fmt.Println(string(body))
+
+		fmt.Println(forecast)
 		return c.NoContent(http.StatusNoContent)
 	}
 }
