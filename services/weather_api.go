@@ -10,7 +10,6 @@ const (
 	QueryParamLatitude  = "lat"
 	QueryParamLongitude = "lon"
 	queryParamAPIKey    = "appid"
-	url                 = "https://api.openweathermap.org/data/2.5/weather?"
 )
 
 type Coordinates struct {
@@ -76,7 +75,7 @@ type ForecastData struct {
 	Cod        int                 `json:"cod"`
 }
 
-func GetWeatherForecastByLatLon(lat, lon float64, key string) (*ForecastData, error) {
+func GetWeatherForecastByLatLon(lat, lon float64, url, key string) (*ForecastData, error) {
 	res, err := http.Get(
 		fmt.Sprintf("%s%s=%.2f&%s=%.2f&%s=%s",
 			url,

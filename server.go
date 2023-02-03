@@ -7,6 +7,7 @@ import (
 )
 
 type server struct {
+	url    string
 	apiKey string
 	e      *echo.Echo
 }
@@ -14,6 +15,7 @@ type server struct {
 func newServer() *server {
 	s := &server{}
 	s.e = echo.New()
+	s.url = os.Getenv("URL")
 	s.apiKey = os.Getenv("API_KEY")
 	return s
 }

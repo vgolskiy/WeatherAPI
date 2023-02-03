@@ -17,7 +17,7 @@ func (s *server) handleGetWeatherForecast() echo.HandlerFunc {
 			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 		}
 
-		forecast, err := services.GetWeatherForecastByLatLon(latitude, longitude, s.apiKey)
+		forecast, err := services.GetWeatherForecastByLatLon(latitude, longitude, s.url, s.apiKey)
 		if err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
