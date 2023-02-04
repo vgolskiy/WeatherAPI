@@ -17,4 +17,6 @@ Work on a repository:
 
 	``` docker-compose up -d weather_api ```
 
--	To verify results you can use Postman requests collection (WeatherAPI.postman_collection.json)
+-	To verify results you can use Postman requests collection (WeatherAPI.postman_collection.json) or a command below:
+     
+    ``` curl '127.0.0.1:2000?lon=-170.37&lat=63.46' ```
