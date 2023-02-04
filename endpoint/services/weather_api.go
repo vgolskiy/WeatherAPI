@@ -1,9 +1,11 @@
 package services
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 const (
@@ -56,12 +58,23 @@ type ForecastData struct {
 }
 
 func GetWeatherForecastByLatLon(lat, lon float64, url, key string) (*ForecastData, error) {
-	res, err := http.Get(
+	req, err := http.NewRequest(
+		"GET",
 		fmt.Sprintf("%s%s=%.2f&%s=%.2f&exclude=minutely,hourly,daily&%s=%s",
 			url,
 			QueryParamLongitude, lon,
 			QueryParamLatitude, lat,
-			queryParamAPIKey, key))
+			queryParamAPIKey, key),
+		nil)
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(req.Context(), 1*time.Second)
+	defer cancel()
+
+	req = req.WithContext(ctx)
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
