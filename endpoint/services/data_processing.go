@@ -6,8 +6,9 @@ type ForecastBase struct {
 }
 
 type WeatherAlert struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	WeatherConditions []string `json:"weather_conditions"`
 }
 
 type Forecast struct {
@@ -38,8 +39,9 @@ func ProcessWeatherForecastData(f *ForecastData) *Forecast {
 	if f.Alerts != nil {
 		for _, a := range f.Alerts {
 			res.WeatherAlert = append(res.WeatherAlert, WeatherAlert{
-				Name:        a.Event,
-				Description: a.Description,
+				Name:              a.Event,
+				Description:       a.Description,
+				WeatherConditions: a.Tags,
 			})
 		}
 	}

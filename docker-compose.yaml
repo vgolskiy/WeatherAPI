@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  weather_api:
+    build:
+      context: ./endpoint
+    env_file:
+      - .env
+    ports:
+      - 2000:2000
+    restart: on-failure

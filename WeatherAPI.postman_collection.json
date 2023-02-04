@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "0f446a29-7548-40a7-b307-97831b3c9001",
+		"name": "Weather API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get weather forecast",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2000/?lon=-170.37&lat=63.46",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2000",
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "lon",
+							"value": "-170.37"
+						},
+						{
+							"key": "lat",
+							"value": "63.46"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
