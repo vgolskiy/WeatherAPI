@@ -70,7 +70,7 @@ func GetWeatherForecastByLatLon(lat, lon float64, url, key string) (*ForecastDat
 		return nil, err
 	}
 
-	ctx, cancel := context.WithTimeout(req.Context(), 1*time.Second)
+	ctx, cancel := context.WithTimeout(req.Context(), 2*time.Second)
 	defer cancel()
 
 	req = req.WithContext(ctx)

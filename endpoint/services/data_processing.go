@@ -7,12 +7,12 @@ type ForecastBase struct {
 
 type WeatherAlert struct {
 	Name              string   `json:"name"`
-	Description       string   `json:"description"`
 	WeatherConditions []string `json:"weather_conditions"`
 }
 
 type Forecast struct {
 	ForecastBase
+	HaveAlerts   bool           `json:"have_alerts"`
 	WeatherAlert []WeatherAlert `json:"weather_alert,omitempty"`
 }
 
@@ -20,27 +20,23 @@ func ProcessWeatherForecastData(f *ForecastData) *Forecast {
 	res := &Forecast{}
 
 	for _, w := range f.Current.Weather {
-		res.WeatherConditions = append(res.WeatherConditions, w.Description)
+		res.WeatherConditions = append(res.WeatherConditions, w.Main)
 	}
 
 	switch {
 	case f.Current.FeelsLike > 303:
 		res.FeelsLike = "Hot"
-	case f.Current.FeelsLike > 293 && f.Current.FeelsLike <= 303:
-		res.FeelsLike = "Warm"
-	case f.Current.FeelsLike > 283 && f.Current.FeelsLike <= 293:
+	case f.Current.FeelsLike > 268 && f.Current.FeelsLike <= 303:
 		res.FeelsLike = "Moderate"
-	case f.Current.FeelsLike > 268 && f.Current.FeelsLike <= 283:
-		res.FeelsLike = "Cold"
 	case f.Current.FeelsLike <= 268:
-		res.FeelsLike = "Freezing"
+		res.FeelsLike = "Cold"
 	}
 
 	if f.Alerts != nil {
+		res.HaveAlerts = true
 		for _, a := range f.Alerts {
 			res.WeatherAlert = append(res.WeatherAlert, WeatherAlert{
 				Name:              a.Event,
-				Description:       a.Description,
 				WeatherConditions: a.Tags,
 			})
 		}
