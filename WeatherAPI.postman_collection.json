@@ -33,6 +33,35 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get weather forecast Negative",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2000/?lon=-170.37&lat=63.46",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2000",
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "lon",
+							"value": "-170.37"
+						},
+						{
+							"key": "lat",
+							"value": "63.46"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
