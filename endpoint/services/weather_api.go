@@ -59,7 +59,7 @@ type ForecastData struct {
 
 func GetWeatherForecastByLatLon(lat, lon float64, url, key string) (*ForecastData, error) {
 	req, err := http.NewRequest(
-		"GET",
+		http.MethodGet,
 		fmt.Sprintf("%s%s=%.2f&%s=%.2f&exclude=minutely,hourly,daily&%s=%s",
 			url,
 			QueryParamLongitude, lon,
@@ -70,7 +70,7 @@ func GetWeatherForecastByLatLon(lat, lon float64, url, key string) (*ForecastDat
 		return nil, err
 	}
 
-	ctx, cancel := context.WithTimeout(req.Context(), 2*time.Second)
+	ctx, cancel := context.WithTimeout(req.Context(), 5*time.Second)
 	defer cancel()
 
 	req = req.WithContext(ctx)
@@ -88,7 +88,7 @@ func GetWeatherForecastByLatLon(lat, lon float64, url, key string) (*ForecastDat
 		return nil, err
 	}
 	if res.StatusCode < 200 || res.StatusCode > 299 {
-		return nil, fmt.Errorf("external service error code %d", res.StatusCode)
+		return nil, fmt.Errorf("can not obtain data, code %d", res.StatusCode)
 	}
 	return forecast, nil
 }

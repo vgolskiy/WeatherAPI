@@ -1,4 +1,6 @@
-package services
+package models
+
+import "WeatherAPI/services"
 
 type ForecastBase struct {
 	WeatherConditions []string `json:"weather_conditions"`
@@ -16,7 +18,7 @@ type Forecast struct {
 	WeatherAlert []WeatherAlert `json:"weather_alert,omitempty"`
 }
 
-func ProcessWeatherForecastData(f *ForecastData) *Forecast {
+func ProcessWeatherForecastData(f *services.ForecastData) *Forecast {
 	res := &Forecast{}
 
 	for _, w := range f.Current.Weather {
