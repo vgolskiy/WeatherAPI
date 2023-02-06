@@ -40,7 +40,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:2000/?lon=-170.37&lat=63.46",
+					"raw": "http://localhost:2000/?lon=&lat=",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -52,11 +52,11 @@
 					"query": [
 						{
 							"key": "lon",
-							"value": "-170.37"
+							"value": ""
 						},
 						{
 							"key": "lat",
-							"value": "63.46"
+							"value": ""
 						}
 					]
 				}
