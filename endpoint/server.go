@@ -6,6 +6,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+const URL = "https://api.openweathermap.org/data/3.0/onecall?"
+
 type server struct {
 	url    string
 	apiKey string
@@ -17,7 +19,7 @@ func newServer() *server {
 
 	s.e = echo.New()
 
-	s.url = os.Getenv("URL")
+	s.url = URL
 	s.apiKey = os.Getenv("API_KEY")
 	return s
 }
